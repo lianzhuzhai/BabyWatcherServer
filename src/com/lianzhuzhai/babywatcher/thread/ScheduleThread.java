@@ -7,16 +7,20 @@ import java.io.InputStream;
 import java.io.RandomAccessFile;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Date;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+
+import com.lianzhuzhai.babywatcher.util.DateUtils;
 
 /**
  * @author ligangbj7466
  * 
  */
 public class ScheduleThread {
-	private static final long PHONE_DELAY_MIN = 1;
+	private static final String PHONE_KEEP_URL = "D:\\watcherPhone\\";
+	private static final long PHONE_DELAY_MIN = 0;
 	private static final long PHONE_PERIOD_MIN = 5;
 	private static ScheduleThread instance = null;
 
@@ -47,7 +51,8 @@ public class ScheduleThread {
 					Socket s = ss.accept();
 					InputStream ins = s.getInputStream();
 
-					File savedFile = new File("D:\\watcherPhone\\" + System.currentTimeMillis() + ".jpg");
+					File savedFile = new File(PHONE_KEEP_URL + DateUtils.formatDate(new Date(), DateUtils.format5)
+							+ ".jpg");
 					// 已经选择了文件
 					if (savedFile.createNewFile()) {
 						// 读取文件的数据，可以每次以快的方式读取数据
